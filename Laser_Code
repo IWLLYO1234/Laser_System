@@ -1,0 +1,42 @@
+int sensor = A0;   // Pin connected to the LDR (Light Dependent Resistor)
+int buzz = 13;     // Pin connected to the buzzer
+int b = 12;        // Pin connected to the button for manual reset
+
+int sensorval;     // Variable to store the LDR reading
+int H = 600;       // Threshold value for the LDR (adjust based on your setup)
+bool k = false;    // Flag to indicate if the laser has been interrupted
+int bState;        // Variable to store the state of the button
+
+void setup() {
+  pinMode(sensor, INPUT);  // Set the LDR pin as an input
+  pinMode(buzz, OUTPUT);   // Set the buzzer pin as an output
+  pinMode(b, INPUT);       // Set the button pin as an input
+}
+
+void loop() {
+  bState = digitalRead(b);         // Read the state of the reset button
+  sensorval = analogRead(sensor);  // Read the value from the LDR
+
+  // Check if the LDR value indicates the laser has been interrupted
+  if (sensorval > 0 && sensorval < H) {
+    k = true;  // Set the flag to true if the laser is interrupted
+  }
+  
+  // Check if the reset button has been pressed
+  if (bState == HIGH) {
+    k = false;  // Reset the flag if the button is pressed
+  }
+
+  // If the laser has been interrupted, activate the buzzer
+  while (k == true) {
+    digitalWrite(buzz, HIGH);  // Turn the buzzer on
+    delay(300);                // Wait for 300ms
+    digitalWrite(buzz, LOW);   // Turn the buzzer off
+    delay(300);                // Wait for 300ms
+    
+    // Break out of the loop if the reset button is pressed
+    if (digitalRead(b) == HIGH) {
+      k = false;  // Reset the flag and stop the buzzer
+    }
+  }
+}
