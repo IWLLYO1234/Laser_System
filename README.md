@@ -10,5 +10,6 @@ Manual Reset: The system includes a reset button that can be pressed to stop the
 
 Usage:
 Intrusion Detection: The system can be used in security applications to detect intrusions or unauthorized access when a laser beam across a protected area is broken.
+
 Object Counting: It can also be used in setups where counting objects passing through a laser beam is required.
 This program effectively combines the components to create a responsive and reliable laser detection system suitable for various applications, offering a clear alert system and a simple reset mechanism.
